@@ -12,7 +12,7 @@ echo	"Hi,	$USER!"
 sleep 1
 echo    "Please wait, while Tomcat will be installed."
 sleep 1
-yum update && yum install	tomcat -y
+yum install	tomcat -y
 clear
 sleep 1
 echo	"adding user"
@@ -57,6 +57,16 @@ ps aux | grep tomcat | grep grep -v | grep -v install_tomcat
 sleep	2
 lsof -i	tcp:8080
 sleep	2
+clear
+
+echo	"Installing admin tools"
+yum install tomcat-webapps tomcat-admin-webapps -y
+clear
+echo	"installing online documentation"
+yum install tomcat-docs-webapp tomcat-javadoc -y
+clear
+echo	"restarting Tomcat"
+service tomcat restart
 clear
 echo	"Have a nice Tomcating"	| sed $'s/Have a nice Tomcating/\e[1m&\e[0m/' 
 sleep 3

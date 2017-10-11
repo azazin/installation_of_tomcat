@@ -21,7 +21,7 @@ echo	"SURPRITSE, user was added automatically during tomcat installation"
 sleep 1
 clear
 cat /etc/passwd | grep tomcat
-sleep 2
+sleep 3
 clear
 echo	"Cheking Java version"
 sleep 1

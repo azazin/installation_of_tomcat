@@ -1,0 +1,84 @@
+#!/bin/bash
+
+clear
+function pause(){
+   read -p "$*"
+}
+
+# ...
+# call it
+echo     -e "\033[1m Dear $USER, please pay attention, this script is tested on CentOS release 6.9\033[0m"
+pause '"Press ENTER to continue or Ctrl+C to cancel"'
+
+
+clear
+echo	"The installation of tomcat will starts now"
+sleep 1
+echo	"Hi,	$USER!"
+sleep 1
+echo    "Please wait, while Tomcat will be installed."
+sleep 1
+yum reinstall	tomcat -y
+clear
+sleep 1
+#wget https://goo.gl/hFQ1K1 -O /opt/jdk-8-linux-x64.rpm
+#rpm -Uvh	/opt/jdk-8-linux-x64.rpm
+
+echo	"adding user"
+sleep 1
+
+echo	"SURPRITSE, user was added automatically during tomcat installation"
+sleep 1
+clear
+
+cat /etc/passwd | grep tomcat
+
+sleep 2
+clear
+
+echo	"Cheking Java version"
+sleep 1
+java -version
+sleep 2
+
+clear
+echo	"Adding Tomcat to starup"
+sleep 1
+/sbin/chkconfig tomcat on
+sleep	1
+/sbin/chkconfig --list | grep tomcat
+sleep	1
+clear
+echo "Enabling Tomcat"
+sleep 2
+service tomcat status
+sleep 1
+echo "Looks like Tomcat is not running"
+sleep 1
+echo	"Starting Tomcat"
+service tomcat start
+sleep 1
+service tomcat status
+sleep	1
+echo "Looks like Tomcat  started successfully"
+clear
+sleep 2
+echo	"Checking whether the Tomcat is running and listening on default port	8080"
+sleep	1
+netstat -tlnp | awk '/:8080 */ {split($NF,a,"/"); print a[2],a[1]}'
+sleep 2
+ps aux | grep tomcat | grep grep -v
+sleep	2
+lsof -i	tcp:8080
+sleep	2
+
+
+clear
+echo	"Have a nice Tomcating"	| sed $'s/Have a nice Tomcating/\e[1m&\e[0m/' 
+sleep 3
+clear
+
+
+
+#useradd -r tomcat8 --shell /bin/false
+#wget http://apache.volia.net/tomcat/tomcat-8/v8.5.23/bin/apache-tomcat-8.5.23.tar.gz -P /tmp

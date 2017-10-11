@@ -12,7 +12,7 @@ echo	"Hi,	$USER!"
 sleep 1
 echo    "Please wait, while Tomcat will be installed."
 sleep 1
-yum reinstall	tomcat -y
+yum update && yum install	tomcat -y
 clear
 sleep 1
 echo	"adding user"

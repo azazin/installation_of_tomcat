@@ -1,0 +1,50 @@
+#!/bin/bash
+clear
+function pause(){
+   read -p "$*"
+}
+echo     -e "\033[1m Dear $USER, please pay attention, this script is tested on CentOS release 6.9\033[0m"
+pause '"Press ENTER to continue or Ctrl+C to cancel"'
+clear
+echo	"The installation of tomcat will starts now"
+echo	"Hi,	$USER!"
+echo    "Please wait, while Tomcat will be installed."
+yum reinstall	tomcat -y
+clear
+echo	"adding user"
+echo	"SURPRITSE, user was added automatically during tomcat installation"
+clear
+cat /etc/passwd | grep tomcat
+clear
+echo	"Cheking Java version"
+java -version
+clear
+echo	"Adding Tomcat to starup"
+/sbin/chkconfig tomcat on
+/sbin/chkconfig --list | grep tomcat
+clear
+echo "Enabling Tomcat"
+service tomcat status
+echo "Looks like Tomcat is not running"
+echo	"Starting Tomcat"
+service tomcat start
+service tomcat status
+echo "Looks like Tomcat  started successfully"
+clear
+echo	"Checking whether the Tomcat is running and listening on default port	8080"
+netstat -tlnp | awk '/:8080 */ {split($NF,a,"/"); print a[2],a[1]}'
+ps aux | grep tomcat | grep grep -v | grep -v install_tomcat
+lsof -i	tcp:8080
+clear
+
+echo	"Installing admin tools"
+yum reinstall tomcat-webapps tomcat-admin-webapps -y
+clear
+echo	"installing online documentation"
+yum reinstall tomcat-docs-webapp tomcat-javadoc -y
+clear
+echo	"restarting Tomcat"
+service tomcat restart
+clear
+echo	"Have a nice Tomcating"	| sed $'s/Have a nice Tomcating/\e[1m&\e[0m/' 
+clear
